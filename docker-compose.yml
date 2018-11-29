@@ -1,0 +1,34 @@
+version: '3'  # version of compose format
+
+services:
+  admin-service:
+    build: .  # path is relative to docker-compose.yml localtion
+    volumes:
+      - .:/usr/src/app # mount point
+    ports:
+      - 5005:85  # host:container
+    depends_on:
+      - audience-service
+      - campaign-service
+      - client-service
+
+  audience-service:
+    build: ./services/aud  # path is relative to docker-compose.yml localtion
+    volumes:
+      - ./services/aud:/usr/src/app # mount point
+    ports:
+      - 5001:80  # host:container
+
+  campaign-service:
+    build: ./services/campaign  # path is relative to docker-compose.yml localtion
+    volumes:
+      - ./services/campaign:/usr/src/app # mount point
+    ports:
+      - 5002:80  # host:container
+
+  client-service:
+    build: ./services/client  # path is relative to docker-compose.yml localtion
+    volumes:
+      - ./services/client:/usr/src/app # mount point
+    ports:
+      - 5003:80  # host:container
